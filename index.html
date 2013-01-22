@@ -19,6 +19,7 @@
                 width: 137px;
                 height: 200px;
                 background: url(img/pointer.png);
+                pointer-events: none;
             }
 
             #pointer-glow {
@@ -42,6 +43,20 @@
                 var holder = document.getElementById('holder');
                 var pointer = document.getElementById('pointer');
                 var pointerGlow = document.getElementById('pointer-glow');
+
+                holder.onmousemove = function(event)
+                {
+                    TweenMax.to([
+                        pointer,
+                        pointerGlow
+                    ], 1, {
+                        css: {
+                            left: event.layerX,
+                            top: event.layerY
+                        },
+                        ease: Strong.easeOut
+                    });
+                };
 
                 TweenMax.to(pointerGlow, .5, {
                     css: {
