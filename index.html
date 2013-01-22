@@ -32,5 +32,25 @@
             <div id="pointer"></div>
             <div id="pointer-glow" style="opacity: 0;"></div>
         </div>
+        <script src="js/TweenMax.js"></script>
+        <script src="js/easing/EasePack.js"></script>
+        <script src="js/plugins/CSSPlugin.js"></script>
+        <script src="js/plugins/CSSRulePlugin.js"></script>
+        <script>
+            (function()
+            {
+                var holder = document.getElementById('holder');
+                var pointer = document.getElementById('pointer');
+                var pointerGlow = document.getElementById('pointer-glow');
+
+                TweenMax.to(pointerGlow, .5, {
+                    css: {
+                        opacity: 1
+                    },
+                    yoyo: true,
+                    repeat: -1
+                });
+            })();
+        </script>
     </body>
 </html>
