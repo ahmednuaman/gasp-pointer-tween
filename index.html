@@ -44,18 +44,27 @@
                 var pointer = document.getElementById('pointer');
                 var pointerGlow = document.getElementById('pointer-glow');
 
-                holder.onmousemove = function(event)
-                {
+                function tweenPointerTo (x, y) {
                     TweenMax.to([
                         pointer,
                         pointerGlow
                     ], 1, {
                         css: {
-                            left: event.layerX,
-                            top: event.layerY
+                            left: x,
+                            top: y
                         },
                         ease: Strong.easeOut
                     });
+                }
+
+                holder.onmousemove = function (event) {
+                    tweenPointerTo(event.clientX, event.clientY);
+                };
+
+                holder.ontouchstart = function (event) {
+                    event.preventDefault();
+
+                    tweenPointerTo(event.touches[0].clientX, event.touches[0].clientY);
                 };
 
                 TweenMax.to(pointerGlow, .5, {
