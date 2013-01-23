@@ -41,17 +41,48 @@
             (function()
             {
                 var holder = document.getElementById('holder');
+                var holderProps = {
+                    width: holder.offsetWidth,
+                    height: holder.offsetHeight
+                };
                 var pointer = document.getElementById('pointer');
                 var pointerGlow = document.getElementById('pointer-glow');
+                var pointerProps = {
+                    width: pointer.offsetWidth,
+                    height: pointer.offsetHeight
+                };
+
+                var margins = {
+                    x: holderProps.width - pointerProps.width,
+                    y: holderProps.height - pointerProps.height
+                };
 
                 function tweenPointerTo (x, y) {
+                    var rotation = 0;
+                    var translateX = 0;
+                    var translateY = 0;
+
+                    if (x >= margins.x || y >= margins.y) {
+                        rotation = 180;
+                        translateX = -pointerProps.width;
+                        translateY = -pointerProps.height;
+
+                    } else {
+                        rotation = 0;
+                        translateX = 0;
+                        translateY = 0;
+                    };
+
                     TweenMax.to([
                         pointer,
                         pointerGlow
                     ], 1, {
                         css: {
                             left: x,
-                            top: y
+                            top: y,
+                            rotation: rotation,
+                            x: translateX,
+                            y: translateY
                         },
                         ease: Strong.easeOut
                     });
@@ -64,7 +95,9 @@
                 holder.ontouchstart = function (event) {
                     event.preventDefault();
 
-                    tweenPointerTo(event.touches[0].clientX, event.touches[0].clientY);
+                    if (event['touches']) {
+                        tweenPointerTo(event.touches[0].clientX, event.touches[0].clientY);
+                    };
                 };
 
                 TweenMax.to(pointerGlow, .5, {
