@@ -67,10 +67,20 @@
                         translateX = -pointerProps.width;
                         translateY = -pointerProps.height;
 
-                    } else {
-                        rotation = 0;
-                        translateX = 0;
+                    };
+
+                    if (x >= margins.x && y <= pointerProps.height) {
+                        rotation = 90;
+                        translateX = -pointerProps.height;
                         translateY = 0;
+
+                    };
+
+                    if (x <= pointerProps.width && y >= margins.y) {
+                        rotation = 270;
+                        translateX = pointerProps.height * .5;
+                        translateY = -pointerProps.height;
+
                     };
 
                     TweenMax.to([
